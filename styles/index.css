@@ -1,12 +1,33 @@
+@charset "UTF-8";
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: "Inter", sans-serif;
 }
 
 body {
   background-color: #965d62;
+  min-height: 100vh;
+  margin: 0;
+  position: relative; /* Necessário para posicionar o background atrás */
   overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../../../assets/Background/background.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  filter: blur(0px);
+  transform: scale(1.05);
+  z-index: -1;
 }
 
 main {
@@ -163,6 +184,32 @@ main {
 .login-button:hover span {
   color: #f2d974;
   font-weight: bold;
+}
+
+.back-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-start;
+  margin: 1rem 0 0 1rem;
+  gap: 0.2rem;
+  text-decoration: none;
+}
+.back-button svg {
+  width: 1rem;
+  fill: #965d62;
+  height: fit-content;
+}
+.back-button span {
+  font-size: 1rem;
+  color: #965d62;
+  font-weight: bold;
+  height: fit-content;
+}
+
+.back-button:hover svg, .back-button:hover span {
+  fill: #f2d974;
+  color: #f2d974;
 }
 
 /*# sourceMappingURL=index.css.map */

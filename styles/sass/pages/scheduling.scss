@@ -2,7 +2,31 @@
 
 body {
   background-color: $bg-color3;
+  min-height: 100vh;
+  margin: 0;
+  position: relative; /* Necessário para posicionar o background atrás */
   overflow-x: hidden;
+  
+  // Criamos uma "camada" apenas para o fundo
+  &::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    // Suas configurações de imagem agora ficam aqui
+    background-image: url(../../../assets/Background/background.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+
+    filter: blur(0px);
+    transform: scale(1.05);
+    z-index: -1;
+  }
 }
 
 main {
@@ -23,6 +47,8 @@ main {
   display: flex;
   align-items: center;
   flex-direction: column;
+
+
 }
 
 .title {
@@ -166,5 +192,35 @@ main {
   & span {
     color: $bg-color5;
     font-weight: bold;
+  }
+}
+
+.back-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-start;
+  margin: 1rem 0 0 1rem;
+  gap: .2rem;
+  text-decoration: none;
+
+  & svg {
+    width: 1rem;
+    fill: $bg-color3;
+    height: fit-content;
+  }
+
+  & span {
+    font-size: 1rem;
+    color: $bg-color3;
+    font-weight: bold;
+    height: fit-content;
+  }
+}
+
+.back-button:hover {
+  & svg, & span {
+    fill: $bg-color5;
+    color: $bg-color5;
   }
 }
