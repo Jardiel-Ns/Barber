@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendamento</title>
+  <link rel="stylesheet" href="styles/index.css">
+</head>
+<body>
+  <main>
+    <div class="box">
+      <h1 class="title">Agendamento</h1>
+      <form action="" class="form" id="scheduling-form">
+        <label for="client-name" class="label">Nome</label>
+        <input type="text" name="client-name" id="client-name" placeholder="Seu nome" required class="input">
+
+        <label for="client-number" class="label">Telefone</label>
+        <input type="tel" name="client-number" id="client-number" placeholder="Seu número" required maxlength="16" class="input">
+
+        <label for="barber" class="label">Escolha o barbeiro:</label>
+        <select id="barber" name="barber" required class="select">
+          <option value="" disabled selected>Selecione</option>
+          <option value="joao">João</option>
+          <option value="carlos">Carlos</option>
+          <option value="marcos">Marcos</option>
+        </select>
+
+        <div class="day-box">
+          <span>Escolha o dia</span>
+          <div class="days">
+            <button type="button" class="btn btn-locked">Segunda</button>
+            <button type="button" class="btn">Terça</button>
+            <button type="button" class="btn">Quarta</button>
+            <button type="button" class="btn">Quinta</button>
+            <button type="button" class="btn">Sexta</button>
+            <button type="button" class="btn">Sábado</button>
+          </div>
+        </div>
+
+        <label for="hour" class="label">Escolha o horário</label>
+        <select id="hour" name="hour" required class="select">
+        <option value="" disabled selected>Selecione</option>
+          <option value="08:00">08:00</option>
+          <option value="09:00">09:00</option>
+          <option value="10:00">10:00</option>
+          <option value="11:00">11:00</option>
+          <option value="12:00">12:00</option>
+          <option value="13:00">13:00</option>
+          <option value="14:00">14:00</option>
+          <option value="15:00">15:00</option>
+          <option value="16:00">16:00</option>
+          <option value="17:00">17:00</option>
+          <option value="18:00">18:00</option>
+        </select>
+
+        <input type="hidden" name="day" id="selected-day">
+        <button type="submit" class="btn submit-button">Agendar</button>
+      </form>
+    </div>
+
+    <a href="#" class="login-button">
+      <img src="assets/icons/haircut-tools-barber-tools-haircut-svgrepo-com.svg" alt="">
+      <span>Sou barbeiro</span>
+    </a>
+  </main>
+</body>
+</html>

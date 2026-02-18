@@ -1,0 +1,170 @@
+@use "../variables.scss" as *;
+
+body {
+  background-color: $bg-color3;
+  overflow-x: hidden;
+}
+
+main {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+
+  align-items: center;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.box {
+  background-color: $bg-color1;
+  height: fit-content;
+  width: 23rem;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  margin-top: 2rem;
+  margin-bottom: .4rem;
+  font-size: 2rem;
+  color: $bg-color5;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 18rem;
+}
+
+.input, .select {
+  background-color: $bg-color2;
+  width: 18rem;
+  height: 2rem;
+  border-radius: 20px;
+  outline: none;
+  border: 1px solid $bg-color3;
+  padding: .5rem;
+  transition: all .2s ease-in-out;
+}
+
+.input:focus {
+  border: 1px solid $bg-color4;
+}
+
+.label {
+  margin-top: 2rem;
+  margin-bottom: .4rem;
+  font-size: 1rem;
+  color: $bg-color5;
+  align-self: flex-start;
+}
+
+.day-box {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  background-color: $bg-color2;
+  padding: 1rem;
+  border-radius: 20px;
+
+  & span {
+    font-size: 1rem;
+    color: $bg-color5;
+  }
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: .5rem;
+}
+
+.btn {
+  border-radius: 20px;
+  outline: none;
+  border: 1px solid $bg-color4;
+  background-color: $bg-color3;
+  width: 5rem;
+  height: 2rem;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+.btn:hover {
+  border: 1px solid $bg-color5;
+  background-color: $bg-color3;
+  transform: scale(1.1);
+}
+
+.btn:focus {
+  border: 1px solid $bg-color5;
+  background-color: $bg-color4;
+}
+
+.btn-locked {
+  border: none;
+  background-color: $bg-color1;
+  transform: scale(1);
+  cursor: auto;
+}
+
+.btn-locked:hover, .btn-locked:focus {
+  border: none;
+  background-color: $bg-color1;
+  transform: none;
+  cursor: auto;
+}
+
+.submit-button {
+  margin: 2rem 0;
+  width: 10rem;
+}
+
+.login-button {
+  margin: 2rem 0;
+  display: flex;
+  gap: 1rem;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: 1rem;
+  padding: 1rem;
+
+  outline: none;
+  border: 1px solid $bg-color1;
+  background-color: $bg-color4;
+  border-radius: 20px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+
+
+  & img {
+    width: 1rem;
+  }
+
+  & span {
+    font-size: 1rem;
+    color: $bg-color1;
+    font-weight: bold;
+  }
+}
+
+.login-button:hover {
+  border: 1px solid $bg-color1;
+  background-color: $bg-color2;
+  transform: scale(1.1);
+
+  & span {
+    color: $bg-color5;
+    font-weight: bold;
+  }
+}
