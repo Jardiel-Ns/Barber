@@ -1,0 +1,64 @@
+@use "../variables.scss" as *;
+
+
+
+.agenda-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $bg-color2;
+  padding: 1rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+  width: 20rem;
+
+  .time {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-right: 1.5rem;
+    color: $bg-color5;
+  }
+
+  .info {
+    flex-grow: 1;
+    max-width: 10rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    .client-name { font-weight: bold; color: white; }
+  }
+
+  .done {
+    margin-left: 1rem;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg { // Estiliza ambos os SVGs de uma vez
+      height: 1.5rem;
+      width: 1.5rem;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .icon-hover {
+      display: none;
+    }
+
+    &:hover {
+      .icon-default {
+        display: none; // Esconde o padrão
+      }
+      .icon-hover {
+        display: block; // Mostra o de hover
+      }
+    }
+
+    &:active {
+      transform: scale(0.9); // Feedback de clique
+    }
+  }
+}
