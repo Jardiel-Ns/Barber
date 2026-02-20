@@ -72,6 +72,7 @@ body::before {
   border: 1px solid #965d62;
   padding: 0.5rem;
   transition: all 0.2s ease-in-out;
+  color: #c7956d;
 }
 
 .input:focus {
@@ -107,6 +108,9 @@ body::before {
   grid-template-rows: repeat(2, 1fr);
   gap: 0.5rem;
 }
+.days input[type=radio] {
+  display: none;
+}
 
 .btn {
   border-radius: 20px;
@@ -117,6 +121,11 @@ body::before {
   height: 2rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  text-align: center;
+  color: #2b222c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn:hover {
@@ -125,7 +134,7 @@ body::before {
   transform: scale(1.1);
 }
 
-.btn:focus {
+input[type=radio]:checked + .btn {
   border: 1px solid #f2d974;
   background-color: #c7956d;
 }
@@ -133,7 +142,8 @@ body::before {
 .btn-locked {
   border: none;
   background-color: #2b222c;
-  transform: scale(1);
+  color: #5e4352;
+  opacity: 0.5;
   cursor: auto;
 }
 

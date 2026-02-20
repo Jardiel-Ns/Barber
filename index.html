@@ -32,12 +32,23 @@
         <div class="day-box">
           <span>Escolha o dia</span>
           <div class="days">
-            <button type="button" class="btn btn-locked">Segunda</button>
-            <button type="button" class="btn">Terça</button>
-            <button type="button" class="btn">Quarta</button>
-            <button type="button" class="btn">Quinta</button>
-            <button type="button" class="btn">Sexta</button>
-            <button type="button" class="btn">Sábado</button>
+            <input type="radio" name="dia_agendamento" id="segunda" value="segunda" data-day="1" disabled>
+            <label for="segunda" class="btn btn-locked">Segunda</label>
+
+            <input type="radio" name="dia_agendamento" id="terca" value="terca" required data-day="2">
+            <label for="terca" class="btn">Terça</label>
+
+            <input type="radio" name="dia_agendamento" id="quarta" value="quarta" data-day="3">
+            <label for="quarta" class="btn">Quarta</label>
+
+            <input type="radio" name="dia_agendamento" id="quinta" value="quinta" required data-day="4">
+            <label for="quinta" class="btn">Quinta</label>
+
+            <input type="radio" name="dia_agendamento" id="sexta" value="sexta" data-day="5">
+            <label for="sexta" class="btn">Sexta</label>
+
+            <input type="radio" name="dia_agendamento" id="sabado" value="sabado" data-day="6">
+            <label for="sabado" class="btn">Sábado</label>
           </div>
         </div>
 
@@ -57,7 +68,6 @@
           <option value="18:00">18:00</option>
         </select>
 
-        <input type="hidden" name="day" id="selected-day">
         <button type="submit" class="btn submit-button">Agendar</button>
       </form>
     </div>
@@ -67,5 +77,6 @@
       <span>Sou barbeiro</span>
     </a>
   </main>
+  <script src="script/scheduling.js"></script>
 </body>
 </html>
