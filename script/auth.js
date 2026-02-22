@@ -38,24 +38,10 @@ onAuthStateChanged(auth, (user) => {
     const currentPage = window.location.pathname.split("/").pop();
 
     if (user) {
-        console.log("Logado:", user.uid);
-        // Se o usuário já está logado e está na página de login, 
-        // talvez você queira mandá-lo para a dashboard
-        if (currentPage === "login.html") {
-            window.location.href = "../index.html"; 
-        }
-    } else {
-        // Se NÃO está logado e NÃO está na página de login
-        if (currentPage !== "login.html") {
-            // No GitHub Pages, o ideal é usar o caminho absoluto do repositório
-            // ou garantir que o '../' aponte para o lugar certo
-            window.location.href = "pages/login.html"; 
-            // Nota: Se você estiver na raiz, o caminho é "pages/login.html"
-            // Se estiver em outra subpasta, a lógica muda.
-        }
+      console.log("Logado:", user.uid);
     }
 });
 
 export function obterUserId() {
-    return currentUser ? currentUser.uid : null;
+  return currentUser ? currentUser.uid : null;
 }
