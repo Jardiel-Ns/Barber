@@ -1,4 +1,4 @@
-import { db } from "./firebaseConfig.js"; // Importe o seu db configurado
+import { db } from "./firebaseconfig.js"; // Importe o seu db configurado
 import { collection, query, where, getDocs, orderBy, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Função que será chamada pelo formulário

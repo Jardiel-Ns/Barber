@@ -1,4 +1,4 @@
-import { auth } from "./firebaseConfig.js";
+import { auth } from "./firebaseconfig.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { buscarAgendamentosPorBarbeiro } from "./database.js";
 

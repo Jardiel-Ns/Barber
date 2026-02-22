@@ -1,4 +1,4 @@
-import { auth } from "./firebaseConfig.js"; // O 'auth' já vem pronto daqui!
+import { auth } from "./firebaseconfig.js"; // O 'auth' já vem pronto daqui!
 import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 const btnEntrar = document.getElementById("btn-entrar");

@@ -41,7 +41,6 @@ form.addEventListener('submit', async (event) => {
       status: "pendente",
       dataCriacao: new Date().toISOString()
   };
-  // --------------------------------
 
   const resultado = await salvarAgendamento(agendamento);
 
