@@ -10,8 +10,6 @@ onAuthStateChanged(auth, async (user) => {
         console.log(`Buscando agenda para o UID: ${user.uid}`);
         const agendamentos = await buscarAgendamentosPorBarbeiro(user.uid);
         renderizarAgenda(agendamentos);
-    } else {
-        window.location.href = "login.html";
     }
 });
 // Torna a função de finalizar acessível ao clique do botão no HTML
