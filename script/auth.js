@@ -33,12 +33,25 @@ if (btnEntrar) { // Verifica se o botão existe (para não dar erro em outras p�
 // --- OBSERVADOR DE ESTADO ---
 onAuthStateChanged(auth, (user) => {
     currentUser = user;
+
+    // Obtém o nome da página atual (ex: login.html)
+    const currentPage = window.location.pathname.split("/").pop();
+
     if (user) {
         console.log("Logado:", user.uid);
+        // Se o usuário já está logado e está na página de login, 
+        // talvez você queira mandá-lo para a dashboard
+        if (currentPage === "login.html") {
+            window.location.href = "../index.html"; 
+        }
     } else {
-        // SÓ redirecione se o usuário NÃO estiver na página de login
-        if (!window.location.pathname.includes("login.html")) {
-            window.location.href = "../pages/login.html";
+        // Se NÃO está logado e NÃO está na página de login
+        if (currentPage !== "login.html") {
+            // No GitHub Pages, o ideal é usar o caminho absoluto do repositório
+            // ou garantir que o '../' aponte para o lugar certo
+            window.location.href = "pages/login.html"; 
+            // Nota: Se você estiver na raiz, o caminho é "pages/login.html"
+            // Se estiver em outra subpasta, a lógica muda.
         }
     }
 });
