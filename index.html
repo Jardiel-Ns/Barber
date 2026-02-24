@@ -16,38 +16,38 @@
       <h1 class="title">Agendamento</h1>
       <form action="" class="form" id="scheduling-form">
         <label for="client-name" class="label">Nome</label>
-        <input type="text" name="client-name" id="client-name" placeholder="Seu nome" required class="input">
+        <input type="text" name="client-name" id="client-name" placeholder="Seu nome" required class="input" minlength="4">
 
         <label for="client-number" class="label">Telefone</label>
-        <input type="tel" name="client-number" id="client-number" placeholder="Seu número" required maxlength="16" class="input">
+        <input type="tel" name="client-number" id="client-number" placeholder="Seu número" required maxlength="15" minlength="15"  class="input">
 
         <label for="barber" class="label">Escolha o barbeiro:</label>
         <select id="barber" name="barber" required class="select">
           <option value="" disabled selected>Selecione</option>
-          <option value="joao">João</option>
-          <option value="carlos">Carlos</option>
-          <option value="marcos">Marcos</option>
+          <option value="NukVxbceU1R572BilTaBDM2P1n33">João</option>
+          <option value="nz5deaqd9zQ64HdSwvIbidPyTT13">Carlos</option>
+          <option value="4s5vZbkw5uWhLTMXRQAjH5SEc0p2">Marcos</option>
         </select>
 
         <div class="day-box">
           <span>Escolha o dia</span>
           <div class="days">
-            <input type="radio" name="dia_agendamento" id="segunda" value="segunda" data-day="1">
+            <input type="radio" name="dia_agendamento" id="segunda" value="seg." data-day="1">
             <label for="segunda" class="btn">Segunda</label>
 
-            <input type="radio" name="dia_agendamento" id="terca" value="terca" required data-day="2">
+            <input type="radio" name="dia_agendamento" id="terca" value="ter." required data-day="2">
             <label for="terca" class="btn">Terça</label>
 
-            <input type="radio" name="dia_agendamento" id="quarta" value="quarta" data-day="3">
+            <input type="radio" name="dia_agendamento" id="quarta" value="qua." data-day="3">
             <label for="quarta" class="btn">Quarta</label>
 
-            <input type="radio" name="dia_agendamento" id="quinta" value="quinta" required data-day="4">
+            <input type="radio" name="dia_agendamento" id="quinta" value="qui." required data-day="4">
             <label for="quinta" class="btn">Quinta</label>
 
-            <input type="radio" name="dia_agendamento" id="sexta" value="sexta" data-day="5">
+            <input type="radio" name="dia_agendamento" id="sexta" value="sex." data-day="5">
             <label for="sexta" class="btn">Sexta</label>
 
-            <input type="radio" name="dia_agendamento" id="sabado" value="sabado" data-day="6">
+            <input type="radio" name="dia_agendamento" id="sabado" value="sab." data-day="6">
             <label for="sabado" class="btn">Sábado</label>
           </div>
         </div>
@@ -65,7 +65,7 @@
           <option value="15:00">15:00</option>
           <option value="16:00">16:00</option>
           <option value="17:00">17:00</option>
-          <option value="18:00" disabled>18:00</option>
+          <option value="18:00">18:00</option>
         </select>
 
         <button type="submit" class="btn submit-button">Agendar</button>
