@@ -2,50 +2,186 @@ import { auth } from "./firebaseconfig.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { buscarAgendamentosPorBarbeiro } from "./database.js";
 
-const container = document.getElementById("container-agenda");
-
 onAuthStateChanged(auth, async (user) => {
     if (user) {
-        // Em vez de usar o email, passamos o UID diretamente
         console.log(`Buscando agenda para o UID: ${user.uid}`);
         const agendamentos = await buscarAgendamentosPorBarbeiro(user.uid);
         renderizarAgenda(agendamentos);
     }
 });
-// Torna a função de finalizar acessível ao clique do botão no HTML
-window.finalizarAgendamento = async (id) => {
-    if (confirm("Deseja marcar este agendamento como concluído?")) {
-        console.log("Finalizando ID:", id);
-        // Próximo passo: criar a função de deletar no database.js
-    }
-};
 
-function renderizarAgenda(lista) {
-  if (!container) return;
-  container.innerHTML = ""; 
+function switchView(viewName, element) {
 
-  if (lista.length === 0) {
-      container.innerHTML = "<p style='color: white; text-align: center;'>Nenhum agendamento encontrado.</p>";
-      return;
+  // 1. Esconde todas as seções de visualização
+  const views = document.querySelectorAll('.view');
+  views.forEach(view => {
+    view.style.display = 'none';
+  });
+
+  // 2. Remove a classe 'active' de todos os botões
+  const buttons = document.querySelectorAll('.nav-btn');
+  buttons.forEach(btn => {
+    btn.classList.remove('active');
+  });
+
+  // 3. Mostra a seção desejada (ID exato do HTML: agenda ou financas)
+  const selectedView = document.getElementById(viewName); // <--- CORREÇÃO AQUI
+  if (selectedView) {
+    selectedView.style.display = 'block';
+  } else {
+    console.error("View não encontrada:", viewName);
   }
 
-  lista.forEach(agendamento => {
-    const itemHtml = `
-      <div class="agenda-item" id="${agendamento.id}">
-        <div class="time">${agendamento.hour || '00:00'}</div>
-        <div class="info">
-          <span class="client-name">${agendamento['client-name'] || 'Sem nome'}</span>
+  // 4. Adiciona a classe 'active' ao botão clicado
+  if (element) {
+    element.classList.add('active');
+  }
+}
+
+// A função que recebe o array do Firebase
+function renderizarAgenda(agendamentosDoFirebase) {
+  const container = document.getElementById("container-agenda");
+  container.innerHTML = '';
+  
+  // 1. Organização dos dados (com os nomes reais do seu console)
+  const mapaAgendamentos = {};
+  
+  if (agendamentosDoFirebase && agendamentosDoFirebase.length > 0) {
+    agendamentosDoFirebase.forEach(agendamento => {
+      // AJUSTE AQUI: mapeando os dados reais
+      console.log()
+      const dia = agendamento.dia_agendamento; // 'sab.'
+      const hora = agendamento.hour;           // '14:00'
+      
+      if (!mapaAgendamentos[dia]) {
+        mapaAgendamentos[dia] = {};
+      }
+      mapaAgendamentos[dia][hora] = agendamento;
+    });
+  }
+
+  // 2. Configurações da sua grade
+  // ATENÇÃO: Os dias aqui devem bater com o 'sab.' que vem do Firebase
+  const diasDaSemana = ["seg.", "ter.", "qua.", "qui.", "sex.", "sab."];
+  const mapaDiasTitulos = {
+      "seg.": "Segunda",
+      "ter.": "Terça",
+      "qua.": "Quarta",
+      "qui.": "Quinta",
+      "sex.": "Sexta",
+      "sab.": "Sábado"
+  };
+  const horaInicio = 8;
+  const horaFim = 18;
+  
+  let htmlCompleto = '';
+
+  // 3. Loop de criação
+  diasDaSemana.forEach(diaKey => {
+    let colunaHtml = `
+      <div class="day-column">
+        <h2 class="day-tittle">${mapaDiasTitulos[diaKey]}</h2>
+        <div class="agenda-list">
+    `;
+
+    for (let h = horaInicio; h <= horaFim; h++) {
+      const horaFormatada = h.toString().padStart(2, '0') + ':00';
+      
+      const agendamentoExistente = mapaAgendamentos[diaKey] ? mapaAgendamentos[diaKey][horaFormatada] : null;
+
+      if (agendamentoExistente) {
+        // --- TEMPLATE: HORÁRIO OCUPADO ---
+        // AJUSTE AQUI: usando os nomes corretos (cliente, telefone)
+        colunaHtml += `
+          <div class="agenda-item ocupado">
+            <div class="time">
+              <span>${horaFormatada}</span>
+              <div class="vertical-line"></div>
+            </div>
+    
+            <div class="info">
+              <span class="client-name">${agendamentoExistente['client-name'] || 'Cliente'}</span>
+              <span class="client-number">${agendamentoExistente['client-number'] || '--'}</span>
+            </div>
+    
+            <div class="toggle">
+              <button class="toggle-btn" onclick="toggleMenu(this)">
+                <span></span>
+              </button>
+              <div class="toggle-options">
+                <button class="toggle-op">Editar</button>
+                <span class="toggle-line"></span>
+                <button class="toggle-op">Apagar</button>
+                <span class="toggle-line"></span>
+                <button class="toggle-op">Ligar</button>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        // --- TEMPLATE: HORÁRIO VAZIO ---
+        colunaHtml += `
+          <div class="agenda-item vazio">
+            <div class="time">
+              <span>${horaFormatada}</span>
+              <div class="vertical-line"></div>
+            </div>
+    
+            <button class="add-button" onclick="novoAgendamento('${diaKey}', '${horaFormatada}')">
+              <img src="../assets/icons/user-round-plus.png" alt="Adicionar">
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    colunaHtml += `
         </div>
-        <button class="done" onclick="finalizarAgendamento('${agendamento.id}')">
-          <svg class="icon-default" width="100px" height="100px" viewBox="0 0 24 24" fill="none">
-            <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <svg class="icon-hover" fill="#2abc29" width="100px" height="100px" viewBox="0 0 24 24">
-            <path d="M12,0A12,12,0,1,0,24,12,12,12,0,0,0,12,0ZM11.52,17L6,12.79l1.83-2.37L11.14,13l4.51-5.08,2.24,2Z"/>
-          </svg>
-        </button>
       </div>
     `;
-    container.innerHTML += itemHtml;
+    
+    htmlCompleto += colunaHtml;
   });
+
+  container.innerHTML = htmlCompleto;
 }
+
+// Opcional: Função de clique para o botão de +
+function novoAgendamento(dia, hora) {
+  console.log(`Abrir modal de agendamento para ${dia} às ${hora}`);
+  // Lógica para abrir seu modal aqui
+}
+
+function toggleMenu(btn) {
+  // Encontra o menu que está dentro do mesmo 'toggle' que o botão clicado
+  const menu = btn.nextElementSibling;
+  if (menu) {
+    menu.classList.toggle('is-open');
+  }
+}
+
+window.toggleMenu = function(btn) {
+  // O menu 'toggle-options' é o próximo elemento após o botão
+  const menu = btn.nextElementSibling;
+  
+  // Fecha outros menus que possam estar abertos antes de abrir este
+  document.querySelectorAll('.toggle-options').forEach(m => {
+    if (m !== menu) m.classList.remove('is-open');
+  });
+
+  if (menu) {
+    menu.classList.toggle('is-open');
+  }
+};
+
+// Quando a página carregar, força a visualização da agenda
+document.addEventListener('DOMContentLoaded', () => {
+  const btnAgenda = document.querySelector('.nav-btn[onclick*="agenda"]');
+  switchView('agenda', btnAgenda);
+});
+
+// Isso torna as funções acessíveis pelo HTML
+window.switchView = switchView;
+window.renderizarAgenda = renderizarAgenda;
+window.novoAgendamento = novoAgendamento;
+window.toggleMenu = toggleMenu; // Você já fez algo parecido aqui

@@ -1,64 +1,332 @@
 @use "../variables.scss" as *;
 
-
-
-.agenda-item {
+body {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: .5rem;
+}
+
+.main-userpage {
+  margin-top: 0;
+}
+
+.back-button-box {
+  width: 23rem;
+  height: fit-content;
+  & .back-button {
+    margin: 1rem 0 0;
+    background-color: $bg-color1;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 20px;
+    display: flex;
+    gap: 5px;
+    transition: all .2s ease-in-out;
+  }
+}
+
+.header {
+  background-color: $bg-color1;
+  width: 24rem;
+  border-radius: 20px 20px 0 0;
+  display: flex;
   justify-content: center;
-  background: $bg-color2;
-  padding: 1rem;
-  border-radius: 20px;
-  margin-bottom: 1rem;
-  width: 20rem;
+  align-items: center;
 
-  .time {
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-right: 1.5rem;
+  .nav-bar {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: fit-content;
+    height: fit-content;
+    padding: .8rem 2rem;
+    border-radius: 50px;
+    margin: 1rem 0 1rem 0;
+
+    background-color: $bg-color3;
+
+    button {
+      cursor: pointer;
+      border: none;
+      background-color: $bg-color3;
+      font-size: 1rem;
+      color: $bg-color4;
+      transition: all .2s ease-in-out;
+      position: relative;
+
+      &.active { //adicionar essa classe quando o btn for  clicado e remover quando for clicado outr opção do nav
+      color: $bg-color5; 
+
+        &::after {
+          content: "";
+          width: 80%;
+          background-color: $bg-color5;
+          opacity: 1;
+        }
+      }
+
+      &::after {
+        content: "";
+        transition: all .2s ease-in-out;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0%;
+        height: 2px;
+        opacity: 0;
+        bottom: -0.2rem;
+      }
+
+      &:hover {
+        color: $bg-color5;
+      }
+    }
+  }
+}
+
+.view {
+  background-color: $bg-color1;
+  height: fit-content;
+  width: 24rem;
+  border-radius: 0 0 20px 20px;
+}
+
+.agenda-box {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-snap-align: start;
+  
+  display: flex;
+  -webkit-overflow-scrolling: touch;
+  gap: .1rem;
+}
+
+.day-column {
+  min-width: 100%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .day-tittle {
     color: $bg-color5;
+    padding: 1rem 0;
   }
-
-  .info {
-    flex-grow: 1;
-    max-width: 10rem;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-    .client-name { font-weight: bold; color: white; }
-  }
-
-  .done {
-    margin-left: 1rem;
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
+  .agenda-item {
     display: flex;
     align-items: center;
-    justify-content: center;
-
-    svg { // Estiliza ambos os SVGs de uma vez
-      height: 1.5rem;
-      width: 1.5rem;
-      transition: transform 0.2s ease-in-out;
-    }
-
-    .icon-hover {
-      display: none;
-    }
-
-    &:hover {
-      .icon-default {
-        display: none; // Esconde o padrão
+    justify-content: flex-start;
+    background: $bg-color2;
+    padding: 1rem;
+    border-radius: 20px;
+    margin: .1rem;
+    width: 22rem;
+    height: 8rem;
+    gap: 1rem;
+  
+    .time {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      
+  
+      span {
+        font-weight: bold;
+        font-size: 1.6rem;
+        color: $bg-color4;
       }
-      .icon-hover {
-        display: block; // Mostra o de hover
+      .vertical-line {
+        height: 5rem;
+        width: .08rem;
+        background-color: $bg-color3;
+      }
+    }
+  
+    .add-button {
+      background-color: $bg-color3;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 0;
+      border: 0;
+      cursor: pointer;
+      transition: all .2s ease-in-out;
+  
+      img {
+        width: 2rem;
+      }
+  
+      &:hover {
+        background-color: $bg-color4;
+        transform: scale(1.1);
+        box-shadow: 0 0 3px $bg-color5;
+      }
+    }
+  
+    .info {
+      flex-grow: 1;
+      max-width: 10rem;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
+      display: flex;
+      flex-direction: column;
+      gap: .1rem;
+      color: $bg-color5;
+  
+      .client-name { font-weight: bold; font-size: 1.2rem;}
+      .client-number { font-weight: normal; font-size: .8rem;}
+    }
+  
+    .toggle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: end;
+      padding: 2px;
+      width: 5rem;
+      height: 6.5rem;
+      position: relative;
+      border-radius: 8px;
+      position: relative;
+      float: right;
+  
+      .toggle-btn {
+        background-color: $bg-color3;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        width: 1.5rem;
+        height: 1.5rem;
+        transition: all .2s ease-in-out;
+  
+        &:hover {
+          background-color: $bg-color4;
+          transform: scale(1.1);
+          box-shadow: 0 0 3px $bg-color5;
+        }
+  
+        span {
+          width: 6px;
+          height: 6px;
+          background-color: $bg-color1;
+          border-radius: 50%;
+          display: block;
+          box-shadow: 
+            0 (-7px) 0 0 $bg-color1, // Ponto de Cima
+            0 7px 0 0 $bg-color1;    // Ponto de Baixo
+        }
+      }
+  
+      .toggle-options {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        flex-direction: column;
+        gap: .3rem;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        padding: 2px;
+        z-index: 1;
+  
+        background-color: $bg-color4;
+        opacity: 0;
+        transform: scale(0);
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        transform-origin: top right;
+        transform-origin: 100% 0%;
+  
+        &.is-open {
+          visibility: visible;
+          opacity: 1;
+          transform: scale(1);
+        }
+  
+        .toggle-op {
+          border: none;
+          width: 100%;
+          height: 1rem;
+          cursor: pointer;
+          background-color: $bg-color3;
+          border-radius: 20px;
+          font-size: .7rem;
+        }
+  
+        .toggle-line {
+          background-color: $bg-color5;
+          width: 70%;
+          height: .08px;
+        }
+      }
+    }
+  }
+}
+
+#financas {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .amount {
+    background-color: $bg-color2;
+    display: flex;
+    justify-content: start;
+    align-items: baseline;
+    gap: .3rem;
+    width: 9rem;
+    height: 3rem;
+    padding: .8rem 2rem;
+    border-radius: 50px;
+
+    p {
+      color: $bg-color1;
+    }
+
+    h2 {
+      color: $money-color;
+    }
+  }
+
+  .historico {
+    background-color: pink;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $bg-color1;
+
+    .historico-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      height: fit-content;
+
+
+      & .line {
+        width: 5rem;
+        height: 1px;
+        background-color: $bg-color3;
+      }
+
+      & .title {
+        color: $bg-color3;
+        font-size: 1rem;
       }
     }
 
-    &:active {
-      transform: scale(0.9); // Feedback de clique
-    }
+    
   }
 }

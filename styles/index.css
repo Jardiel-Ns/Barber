@@ -5,6 +5,9 @@
   margin: 0;
   font-family: "Inter", sans-serif;
 }
+*::-webkit-scrollbar {
+  display: none;
+}
 
 body {
   background-color: #965d62;
@@ -222,59 +225,304 @@ input[type=radio]:checked + .btn {
   color: #f2d974;
 }
 
-.agenda-item {
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.main-userpage {
+  margin-top: 0;
+}
+
+.back-button-box {
+  width: 23rem;
+  height: fit-content;
+}
+.back-button-box .back-button {
+  margin: 1rem 0 0;
+  background-color: #2b222c;
+  width: fit-content;
+  padding: 5px;
+  border-radius: 20px;
+  display: flex;
+  gap: 5px;
+  transition: all 0.2s ease-in-out;
+}
+
+.header {
+  background-color: #2b222c;
+  width: 24rem;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.header .nav-bar {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: fit-content;
+  height: fit-content;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  margin: 1rem 0 1rem 0;
+  background-color: #965d62;
+}
+.header .nav-bar button {
+  cursor: pointer;
+  border: none;
+  background-color: #965d62;
+  font-size: 1rem;
+  color: #c7956d;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}
+.header .nav-bar button.active {
+  color: #f2d974;
+}
+.header .nav-bar button.active::after {
+  content: "";
+  width: 80%;
+  background-color: #f2d974;
+  opacity: 1;
+}
+.header .nav-bar button::after {
+  content: "";
+  transition: all 0.2s ease-in-out;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 2px;
+  opacity: 0;
+  bottom: -0.2rem;
+}
+.header .nav-bar button:hover {
+  color: #f2d974;
+}
+
+.view {
+  background-color: #2b222c;
+  height: fit-content;
+  width: 24rem;
+  border-radius: 0 0 20px 20px;
+}
+
+.agenda-box {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-snap-align: start;
+  display: flex;
+  -webkit-overflow-scrolling: touch;
+  gap: 0.1rem;
+}
+
+.day-column {
+  min-width: 100%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.day-column .day-tittle {
+  color: #f2d974;
+  padding: 1rem 0;
+}
+.day-column .agenda-item {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background: #5e4352;
   padding: 1rem;
   border-radius: 20px;
-  margin-bottom: 1rem;
-  width: 20rem;
+  margin: 0.1rem;
+  width: 22rem;
+  height: 8rem;
+  gap: 1rem;
 }
-.agenda-item .time {
+.day-column .agenda-item .time {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.day-column .agenda-item .time span {
   font-weight: bold;
-  font-size: 1.2rem;
-  margin-right: 1.5rem;
-  color: #f2d974;
+  font-size: 1.6rem;
+  color: #c7956d;
 }
-.agenda-item .info {
+.day-column .agenda-item .time .vertical-line {
+  height: 5rem;
+  width: 0.08rem;
+  background-color: #965d62;
+}
+.day-column .agenda-item .add-button {
+  background-color: #965d62;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0;
+  border: 0;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.day-column .agenda-item .add-button img {
+  width: 2rem;
+}
+.day-column .agenda-item .add-button:hover {
+  background-color: #c7956d;
+  transform: scale(1.1);
+  box-shadow: 0 0 3px #f2d974;
+}
+.day-column .agenda-item .info {
   flex-grow: 1;
   max-width: 10rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  color: #f2d974;
 }
-.agenda-item .info .client-name {
+.day-column .agenda-item .info .client-name {
   font-weight: bold;
-  color: white;
+  font-size: 1.2rem;
 }
-.agenda-item .done {
-  margin-left: 1rem;
-  background: none;
+.day-column .agenda-item .info .client-number {
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+.day-column .agenda-item .toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  padding: 2px;
+  width: 5rem;
+  height: 6.5rem;
+  position: relative;
+  border-radius: 8px;
+  position: relative;
+  float: right;
+}
+.day-column .agenda-item .toggle .toggle-btn {
+  background-color: #965d62;
+  border-radius: 50%;
   border: none;
-  padding: 0;
   cursor: pointer;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: all 0.2s ease-in-out;
+}
+.day-column .agenda-item .toggle .toggle-btn:hover {
+  background-color: #c7956d;
+  transform: scale(1.1);
+  box-shadow: 0 0 3px #f2d974;
+}
+.day-column .agenda-item .toggle .toggle-btn span {
+  width: 6px;
+  height: 6px;
+  background-color: #2b222c;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 -7px 0 0 #2b222c, 0 7px 0 0 #2b222c;
+}
+.day-column .agenda-item .toggle .toggle-options {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  padding: 2px;
+  z-index: 1;
+  background-color: #c7956d;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transform-origin: top right;
+  transform-origin: 100% 0%;
+}
+.day-column .agenda-item .toggle .toggle-options.is-open {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+.day-column .agenda-item .toggle .toggle-options .toggle-op {
+  border: none;
+  width: 100%;
+  height: 1rem;
+  cursor: pointer;
+  background-color: #965d62;
+  border-radius: 20px;
+  font-size: 0.7rem;
+}
+.day-column .agenda-item .toggle .toggle-options .toggle-line {
+  background-color: #f2d974;
+  width: 70%;
+  height: 0.08px;
+}
+
+#financas {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#financas .amount {
+  background-color: #5e4352;
+  display: flex;
+  justify-content: start;
+  align-items: baseline;
+  gap: 0.3rem;
+  width: 9rem;
+  height: 3rem;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+}
+#financas .amount p {
+  color: #2b222c;
+}
+#financas .amount h2 {
+  color: #31a252;
+}
+#financas .historico {
+  background-color: pink;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #2b222c;
+}
+#financas .historico .historico-title {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+  height: fit-content;
 }
-.agenda-item .done svg {
-  height: 1.5rem;
-  width: 1.5rem;
-  transition: transform 0.2s ease-in-out;
+#financas .historico .historico-title .line {
+  width: 5rem;
+  height: 1px;
+  background-color: #965d62;
 }
-.agenda-item .done .icon-hover {
-  display: none;
-}
-.agenda-item .done:hover .icon-default {
-  display: none;
-}
-.agenda-item .done:hover .icon-hover {
-  display: block;
-}
-.agenda-item .done:active {
-  transform: scale(0.9);
+#financas .historico .historico-title .title {
+  color: #965d62;
+  font-size: 1rem;
 }
 
 /*# sourceMappingURL=index.css.map */
