@@ -28,21 +28,42 @@
       <div class="agenda-box" id="container-agenda">
         <!--js ta criando tudo!-->
       </div>
+      <div class="popup-blur" id="popup-container" style="display: none;">
+        <div class="popup">
+          <button class="close-button">
+            <img src="../assets/icons/circle-x.png" alt="">
+          </button>
+          <form action="" id="popup-fomr" class="popup-form">
+            <label for="client-name" class="label">Nome</label>
+            <input type="text" name="client-name" id="popup-client-name" placeholder="Nome do cliente" required class="input" minlength="4">
+            <label for="client-number" class="label">Telefone</label>
+            <input type="tel" name="client-number" id="popup-client-number" placeholder="Número do cliente" required maxlength="15" minlength="15"  class="input">
+            <button type="submit" class="btn submit-button">Agendar</button>
+          </form>
+        </div>
+      </div>
     </section>
 
-    <section id="financas" class="view" style="display: none;">
-      <div class="amount">
+    <section id="financas" class="view financas" style="display: none;">
+      <div class="financas-amount">
         <p>R$</p>
         <h2>158</h2>
       </div>
-      <div class="historico">
+      <div class="financas-historico">
         <div class="historico-title">
-          <span class="line"></span>
-          <span class="title">historico de Ganhos</span>
-          <span class="line"></span>
+          <span class="financas-line"></span>
+          <span class="financas-title">historico de Ganhos</span>
+          <span class="financas-line"></span>
         </div>
         <div class="historico-item">
-          
+          <div class="item-date">
+            <span class="item-date-hour">00:00H</span>
+            <span class="item-date-day">00/00/0000</span>
+          </div>
+          <span class="item-value">
+            + 00R$
+          </span>
+          <span class="item-description">Cabelo, Barba e Bigode</span>
         </div>
       </div>
     </section>

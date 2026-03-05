@@ -11,7 +11,6 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 function switchView(viewName, element) {
-
   // 1. Esconde todas as seções de visualização
   const views = document.querySelectorAll('.view');
   views.forEach(view => {
@@ -49,7 +48,6 @@ function renderizarAgenda(agendamentosDoFirebase) {
   if (agendamentosDoFirebase && agendamentosDoFirebase.length > 0) {
     agendamentosDoFirebase.forEach(agendamento => {
       // AJUSTE AQUI: mapeando os dados reais
-      console.log()
       const dia = agendamento.dia_agendamento; // 'sab.'
       const hora = agendamento.hour;           // '14:00'
       
@@ -127,7 +125,7 @@ function renderizarAgenda(agendamentosDoFirebase) {
               <div class="vertical-line"></div>
             </div>
     
-            <button class="add-button" onclick="novoAgendamento('${diaKey}', '${horaFormatada}')">
+            <button class="add-button" onclick="AgendamentoManual('${diaKey}', '${horaFormatada}')">
               <img src="../assets/icons/user-round-plus.png" alt="Adicionar">
             </button>
           </div>
@@ -146,10 +144,84 @@ function renderizarAgenda(agendamentosDoFirebase) {
   container.innerHTML = htmlCompleto;
 }
 
-// Opcional: Função de clique para o botão de +
-function novoAgendamento(dia, hora) {
-  console.log(`Abrir modal de agendamento para ${dia} às ${hora}`);
-  // Lógica para abrir seu modal aqui
+// Variáveis temporárias para guardar o contexto do clique
+// 1. Variável global (a "memória" do clique)
+let dadosAgendamentoTemporario = {};
+
+// 2. Função chamada pelo botão "+" da agenda
+function AgendamentoManual(dia, hora) {
+  // Pega o UID ou Nome que você já tem no seu sistema
+  // Se você tiver uma variável 'usuarioLogadoUID', use ela aqui
+  const barbeiroID = typeof usuarioLogadoUID !== 'undefined' ? usuarioLogadoUID : "Barbeiro_Logado";
+
+  dadosAgendamentoTemporario = {
+    dia_agendamento: dia,
+    hour: hora,
+    barbeiro_id: barbeiroID 
+  };
+
+  const popup = document.getElementById("popup-container");
+  if (popup) {
+    popup.style.display = "flex";
+  } else {
+    console.error("Erro: Verifique se o ID no HTML é 'popup-container'");
+  }
+}
+
+// 3. Configuração do formulário (Roda assim que o HTML carregar)
+document.addEventListener("DOMContentLoaded", function() {
+  const formulario = document.getElementById("popup-form");
+
+  // 1. Achar o botão de fechar
+  const btnFechar = document.querySelector(".close-button");
+  const popup = document.getElementById("popup-container");
+
+  if (btnFechar && popup) {
+        btnFechar.addEventListener("click", function() {
+            popup.style.display = "none"; // Esconde o popup
+        });
+    }
+
+  if (formulario) {
+    formulario.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      // Pegando o que o barbeiro digitou no momento
+      const nomeCliente = document.getElementById("popup-client-name").value;
+      const telefoneCliente = document.getElementById("popup-client-number").value;
+
+      // Montando o objeto final unindo as duas partes
+      const agendamentoFinal = {
+        ...dadosAgendamentoTemporario,
+        "client-name": nomeCliente,
+        "client-number": telefoneCliente,
+        status: "confirmado",
+        criadoEm: new Date().toISOString()
+      };
+
+      enviarParaOBanco(agendamentoFinal);
+    });
+  } else {
+    console.error("Erro: O formulário 'popup-form' não foi encontrado.");
+  }
+});
+
+window.AgendamentoManual = AgendamentoManual;
+
+// 4. Função de envio
+async function enviarParaOBanco(dados) {
+  console.log("SUCESSO! Objeto pronto:", dados);
+  
+  // Aqui você vai inserir o código do Firebase depois
+  
+  // Limpando a tela
+  const popup = document.getElementById("popup-container");
+  const form = document.getElementById("popup-form");
+  
+  if (popup) popup.style.display = "none";
+  if (form) form.reset();
+  
+  alert("Agendamento capturado com sucesso no console!");
 }
 
 function toggleMenu(btn) {
